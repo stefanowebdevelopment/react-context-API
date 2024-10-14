@@ -6,6 +6,9 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import HomePage from "./pages/Home";
 import RootLayout from "./pages/Root";
+import SummaryPage from "./pages/Summary";
+
+import { BookingContext } from './store/booking-context.jsx'; 
 
 const router = createBrowserRouter([
   {
@@ -13,13 +16,15 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "", element: <HomePage /> },
-      { path: "/test", element: <p>TEST ROUTE</p> }
+      { path: "/summary", element: <SummaryPage /> }
     ],
   },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router} />
+  )
 }
 
 export default App;
