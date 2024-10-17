@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import useFetchData from "../hooks/fetchDataHook";
+import { useNavigate } from "react-router-dom";
 
 // STEP 1 => CONTEXT SETUP // TODO to update
 export const BookingContext = createContext({
@@ -26,6 +27,8 @@ export default function BookingContextProvider({ children }) {
   
   const selectedUrlService = stepper.find(el => el.isSelected);
   const { fetchedData } = useFetchData(selectedUrlService.serviceUrl, handleNextStep);
+  
+  const navigate = useNavigate();
 
   function handleNextStep({ stepId }) {
     setStepper((prevStepper) => {
@@ -57,7 +60,9 @@ export default function BookingContextProvider({ children }) {
 
     setFormDataState((prevState) => {
       return formObject;
-    })
+    });
+
+     navigate('/summary');
   }
 
   function handleSelectedService(event, item, step) {
