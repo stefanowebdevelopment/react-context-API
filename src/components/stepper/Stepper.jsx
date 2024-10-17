@@ -1,11 +1,11 @@
 
 import { useContext } from "react";
-import BookingContextProvider from "../../store/booking-context";
+import BookingContextProvider, { BookingContext } from "../../store/booking-context";
 import DatePicker from "../datepicker/datePicker";
 
 export default function Stepper() {
   
-  const bookingCtx = useContext(BookingContextProvider);
+  const bookingCtx = useContext(BookingContext);
   
   return (
     <>
@@ -43,8 +43,8 @@ export default function Stepper() {
                     </div>
                     <div className="card-actions ">
                       <button onClick={() => bookingCtx.handlePrevtStep(step)} className="btn btn-primary">Back</button>
-                      {step.stepId < stepper.length && <button onClick={() => bookingCtx.handleNextStep(step)} className="btn btn-primary">Next</button>}
-                      {step.stepId === stepper.length && <button type="submit" className="btn btn-primary">Submit</button>}
+                      {step.stepId < bookingCtx.stepper.length && <button onClick={() => bookingCtx.handleNextStep(step)} className="btn btn-primary">Next</button>}
+                      {step.stepId === bookingCtx.stepper.length && <button type="submit" className="btn btn-primary">Submit</button>}
                     </div>
                   </section>
                   
