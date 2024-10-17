@@ -3,6 +3,7 @@ import useFetchData from "../hooks/fetchDataHook";
 
 // STEP 1 => CONTEXT SETUP // TODO to update
 export const BookingContext = createContext({
+  stepper: [],
   fetchedData: [],
   formData: [],
   handleSelectedService: () => {},
@@ -36,7 +37,6 @@ export default function BookingContextProvider({ children }) {
       return prevStepper.map(el => el.stepId == stepId+1 ? {...el, isSelected:true} : {...el, isSelected:false})
     })
   }
-
   function handleGetFormData(event) {
     event.preventDefault();
 
@@ -52,16 +52,15 @@ export default function BookingContextProvider({ children }) {
     setSelectedService('');
     setSelectedAssistant('');
   }
-
   function handleSelectedService(event, item, step) {
     setSelectedService(() => item)
   }
-
   function handleSelectedAssistant(event, item, step) {
     setSelectedAssistant(() => item)
   }
 
   const ctxValue = {
+    stepper: stepper,
     fetchedData: fetchedData,
     formData: [selectedService, selectedAssistant],
     handleSelectedService: handleSelectedService,
@@ -70,7 +69,7 @@ export default function BookingContextProvider({ children }) {
     handleNextStep: handleNextStep
   };
 
-  return <BookingContextProvider.Provider value={ctxValue}>
+  return <BookingContext.Provider value={ctxValue}>
     {children}
-  </BookingContextProvider.Provider>
+  </BookingContext.Provider>
 }

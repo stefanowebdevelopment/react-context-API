@@ -1,11 +1,11 @@
 
 import { useContext } from "react";
-import { BookingContext } from "../../store/booking-context";
+import BookingContextProvider from "../../store/booking-context";
 import DatePicker from "../datepicker/datePicker";
 
 export default function Stepper() {
   
-  const bookingCtx = useContext(BookingContext);
+  const bookingCtx = useContext(BookingContextProvider);
   
   return (
     <>
@@ -19,7 +19,7 @@ export default function Stepper() {
                  <h2 className="card-title">{step.stepTitle}</h2>
 
                   <form  className="mt-4" onSubmit={bookingCtx.handleGetFormData}> 
-                    { step.stepId < stepper.length &&
+                    { step.stepId < bookingCtx.stepper.length &&
                       bookingCtx.fetchedData.slice(0, 3).map((item) => {
                         return(
                           <div key={item.id} className="form-control">
