@@ -10,7 +10,7 @@ export default function SummaryPage() {
     <>
       <p>Summary Page Component Works!</p>
       <div className='p-5' style={{ border: '2px solid red' }}>
-        {JSON.stringify(bookingCtx)}
+        {JSON.stringify(bookingCtx.formDataState)}
       </div>
     </>
   );

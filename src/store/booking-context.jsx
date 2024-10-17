@@ -6,6 +6,7 @@ export const BookingContext = createContext({
   stepper: [],
   fetchedData: [],
   formData: [],
+  formDataState: {},
   handleSelectedService: () => {},
   handleSelectedAssistant: () => {},
   handleGetFormData: () => {},
@@ -16,6 +17,7 @@ export default function BookingContextProvider({ children }) {
 
   const [selectedService, setSelectedService] = useState("");
   const [selectedAssistant, setSelectedAssistant] = useState("");
+  const [formDataState, setFormDataState] = useState({});
   const [stepper, setStepper] = useState([
     { stepId: 1, stepTitle: "Prenota Servizio", isSelected: true, serviceUrl: 'https://jsonplaceholder.typicode.com/todos', changeHandler: handleSelectedService },
     { stepId: 2, stepTitle: "Scegli Assistente", isSelected: false, serviceUrl: 'https://jsonplaceholder.typicode.com/users', changeHandler: handleSelectedAssistant },
@@ -37,6 +39,7 @@ export default function BookingContextProvider({ children }) {
       return prevStepper.map(el => el.stepId == stepId+1 ? {...el, isSelected:true} : {...el, isSelected:false})
     })
   }
+
   function handleGetFormData(event) {
     event.preventDefault();
 
@@ -51,7 +54,12 @@ export default function BookingContextProvider({ children }) {
 
     setSelectedService('');
     setSelectedAssistant('');
+
+    setFormDataState((prevState) => {
+      return formObject;
+    })
   }
+
   function handleSelectedService(event, item, step) {
     setSelectedService(() => item)
   }
@@ -63,6 +71,7 @@ export default function BookingContextProvider({ children }) {
     stepper: stepper,
     fetchedData: fetchedData,
     formData: [selectedService, selectedAssistant],
+    formDataState: formDataState,
     handleSelectedService: handleSelectedService,
     handleSelectedAssistant: handleSelectedAssistant,
     handleGetFormData: handleGetFormData,

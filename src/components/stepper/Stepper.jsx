@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import BookingContextProvider, { BookingContext } from "../../store/booking-context";
 import DatePicker from "../datepicker/datePicker";
+import { Link } from "react-router-dom";
 
 export default function Stepper() {
   
@@ -61,6 +62,14 @@ export default function Stepper() {
           { JSON.stringify(selectedService) }
           { JSON.stringify(selectedAssistant) }
           </div> */}
+
+          {/* <div className='p-5' style={{ border: '2px solid red' }}>
+            {JSON.stringify(bookingCtx.formDataState)}
+          </div> */}
+
+          <section className="p-5 mt-3 flex justify-center">
+            <Link className="btn btn-primary" to="/summary">Go to Summary!</Link>
+          </section>
 
       </section>
     </>
