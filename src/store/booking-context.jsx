@@ -17,8 +17,6 @@ export const BookingContext = createContext({
 function bookingReducer(state, action) {
 
   if(action.type === 'ADD_SELECTED_SERVICE') {
-    console.log('ACTION: ', action);
-    debugger;
     return action.payload
   }
 
@@ -69,7 +67,10 @@ export default function BookingContextProvider({ children }) {
     })
 
     // setSelectedService('');
-    selectedServiceDispatch('');
+    selectedServiceDispatch({
+      type:  'ADD_SELECTED_SERVICE',
+      payload: ""
+    });
     setSelectedAssistant('');
 
     setFormDataState((prevState) => {
