@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { BookingContext } from '../store/booking-context.jsx';
+import { json, useLoaderData } from 'react-router-dom';
 
 
 export default function SummaryPage() {
