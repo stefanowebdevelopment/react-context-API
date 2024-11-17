@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useReducer } from "react";
 import useFetchData from "../hooks/fetchDataHook";
 import { useNavigate } from "react-router-dom";
 
@@ -14,9 +14,20 @@ export const BookingContext = createContext({
   handleNextStep: () => {},
 });
 
+function bookingReducer(state, action) {
+
+  if(action.type === 'ADD_SELECTED_SERVICE') {
+    return state.item; 
+  }
+
+  return state;
+}
+
 export default function BookingContextProvider({ children }) {
 
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedServiceState, selectedServiceDispatch] = useReducer(bookingReducer, "");
+
+  // const [selectedService, setSelectedService] = useState("");
   const [selectedAssistant, setSelectedAssistant] = useState("");
   const [formDataState, setFormDataState] = useState({});
   const [stepper, setStepper] = useState([
@@ -47,7 +58,7 @@ export default function BookingContextProvider({ children }) {
     event.preventDefault();
 
     const formObject = {
-      selectedService: selectedService,
+      selectedService: selectedServiceState,
       selectedAssistant: selectedAssistant
     }
 
@@ -55,7 +66,8 @@ export default function BookingContextProvider({ children }) {
       return prevState.map((item, index) => index === 0 ? { ...item, isSelected : true } : { ...item, isSelected : false });
     })
 
-    setSelectedService('');
+    // setSelectedService('');
+    selectedServiceDispatch('');
     setSelectedAssistant('');
 
     setFormDataState((prevState) => {
@@ -66,7 +78,11 @@ export default function BookingContextProvider({ children }) {
   }
 
   function handleSelectedService(event, item, step) {
-    setSelectedService(() => item)
+    // setSelectedService(() => item);
+    selectedServiceDispatch({
+      type:  'ADD_SELECTED_SERVICE',
+      payload: item
+    });
   }
   function handleSelectedAssistant(event, item, step) {
     setSelectedAssistant(() => item)
@@ -75,7 +91,7 @@ export default function BookingContextProvider({ children }) {
   const ctxValue = {
     stepper: stepper,
     fetchedData: fetchedData,
-    formData: [selectedService, selectedAssistant],
+    formData: [selectedServiceState, selectedAssistant],
     formDataState: formDataState,
     handleSelectedService: handleSelectedService,
     handleSelectedAssistant: handleSelectedAssistant,
