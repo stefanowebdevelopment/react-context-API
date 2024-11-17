@@ -17,7 +17,9 @@ export const BookingContext = createContext({
 function bookingReducer(state, action) {
 
   if(action.type === 'ADD_SELECTED_SERVICE') {
-    return state.item; 
+    console.log('ACTION: ', action);
+    debugger;
+    return action.payload
   }
 
   return state;
