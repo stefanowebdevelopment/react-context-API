@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useFetchData from "../../hooks/fetchDataHook";
 import DatePicker from "../datepicker/datePicker";
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Stepper() {
   
@@ -14,6 +15,9 @@ export default function Stepper() {
   
   const selectedUrlService = stepper.find(el => el.isSelected);
   const { fetchedData } = useFetchData(selectedUrlService.serviceUrl, handleNextStep);
+
+  const counterState = useSelector(state => state.counter);
+  const dispatch = useDispatch();
 
   function handleNextStep({ stepId }) {
     setStepper((prevStepper) => {
@@ -30,10 +34,6 @@ export default function Stepper() {
 
   function handleGetFormData(event) {
     event.preventDefault();
-
-    // const fd = new FormData(event.target);
-    // const data = Object.fromEntries(fd.entries());
-    // console.log('DATA: ', data);
 
     const formObject = {
       selectedService: selectedService,
@@ -56,6 +56,19 @@ export default function Stepper() {
     setSelectedAssistant(() => item)
   }
 
+  function increment() {
+    dispatch({
+      type: 'increment',
+      payload: null
+    });
+  }
+
+  function decrement() {
+    dispatch({
+      type: 'decrement',
+      payload: null
+    });
+  }
 
   return (
     <>
@@ -99,18 +112,33 @@ export default function Stepper() {
                   </section>
                   
                   </form>
-
-                 
                </div>
              </div>
            </main>
           );
         })}
 
-          {/* <div style={{ border: '2px solid red' }} className="p-5 m-[5%]">
-          { JSON.stringify(selectedService) }
-          { JSON.stringify(selectedAssistant) }
-          </div> */}
+        <section id="counter-section" className="flex justify-center">
+          
+          <div className="card bg-base-100 w-[45%] shadow-xl mt-[5%]">
+            <div className="card-body">
+              <h2 className="card-title">Card Counter</h2>
+
+              <section className="flex justify-between items-center mt-[5%]">
+
+                <div className="card-actions">
+                  <div className="badge badge-secondary p-4">{counterState}</div>
+                </div>
+
+                <div className="card-actions ">
+                  <button onClick={increment} className="btn btn-primary">Increment</button>
+                  <button onClick={decrement} className="btn btn-primary">Decrement</button>
+                </div>
+              </section>
+              
+            </div>
+          </div>
+        </section>
 
       </section>
     </>
