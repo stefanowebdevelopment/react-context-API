@@ -2,6 +2,7 @@ import { useState } from "react";
 import useFetchData from "../../hooks/fetchDataHook";
 import DatePicker from "../datepicker/datePicker";
 import { useSelector, useDispatch } from 'react-redux';
+import { counterActions } from "../../store";
 
 export default function Stepper() {
   
@@ -57,17 +58,11 @@ export default function Stepper() {
   }
 
   function increment() {
-    dispatch({
-      type: 'increment',
-      payload: null
-    });
+    dispatch(counterActions.increment())
   }
 
   function decrement() {
-    dispatch({
-      type: 'decrement',
-      payload: null
-    });
+    dispatch(counterActions.decrement())
   }
 
   return (
